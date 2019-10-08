@@ -1,0 +1,12 @@
+# port
+server:
+  port: 8080
+  servlet:
+    context-path: /security
+
+  # 视图解析
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
