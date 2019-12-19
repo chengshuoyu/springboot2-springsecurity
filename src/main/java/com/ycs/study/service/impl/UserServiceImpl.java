@@ -22,12 +22,12 @@ public class UserServiceImpl implements IUserService {
 
     private static final Set<SysUser> users = new HashSet<>();
 
-
+/*
     static {
         users.add(new SysUser(1L, "fulin", "123456", Arrays.asList("ROLE_ADMIN", "ROLE_DOCKER")));
         users.add(new SysUser(2L, "xiaohan", "123456", Arrays.asList("ROLE_ADMIN", "ROLE_DOCKER")));
         users.add(new SysUser(3L, "longlong", "123456", Arrays.asList("ROLE_ADMIN", "ROLE_DOCKER")));
-    }
+    }*/
 
     @Override
     public SysUser findByUsername(String userName) {

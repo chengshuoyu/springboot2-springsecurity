@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 登录成功处理的handler
+ * 登录成功处理的handler，AuthenticationSuccessHandler默认返回页面，实现该接口重写onAuthenticationSuccess方法返回json数据
+ * @author chengshuoyu
  */
 @Component
 @Slf4j

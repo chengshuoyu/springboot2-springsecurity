@@ -3,6 +3,7 @@ package com.ycs.study.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,9 +16,9 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class SysUser {
+public class SysUser implements Serializable {
     private Long id;
     private String userName;
     private String password;
-    private List<String> roles;
+    private List<SysRole> roles;
 }

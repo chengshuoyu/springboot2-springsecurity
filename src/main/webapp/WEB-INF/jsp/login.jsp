@@ -37,6 +37,8 @@
             alert("用户名或密码不能为空");
             return;
         }
+
+        //参数必须是username，password
         $.ajax({
             type: "POST",
             url: "authentication/form1",
