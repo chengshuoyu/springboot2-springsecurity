@@ -24,17 +24,17 @@ public class InitData {
 
     static {
         SYS_USERS.add(
-                new SysUser(1L, "fulin", "123456",
+                new SysUser(1L, "fulin", "a3caed36f0fe5a01e5f144db8927235e",
                         SYS_ROLES.stream().filter(o -> StringUtils.equalsAny(o.getRoleName(), "JAVA", "DOCKER")).collect(Collectors.toList())
                 )
         );
         SYS_USERS.add(
-                new SysUser(2L, "maoxiansheng", "123456",
+                new SysUser(2L, "maoxiansheng", "a3caed36f0fe5a01e5f144db8927235e",
                         SYS_ROLES.stream().filter(o -> StringUtils.equalsAny(o.getRoleName(), "PHP", "DOCKER")).collect(Collectors.toList())
                 )
         );
         SYS_USERS.add(
-                new SysUser(3L, "happy fish", "123456",
+                new SysUser(3L, "happy fish", "a3caed36f0fe5a01e5f144db8927235e",
                         SYS_ROLES.stream().filter(o -> StringUtils.equalsAny(o.getRoleName(), "PYTHON", "CENTOS")).collect(Collectors.toList())
                 )
         );

@@ -4,19 +4,25 @@ import com.ycs.study.handler.AccessDeniedAuthenticationHandler;
 import com.ycs.study.handler.FailureAuthenticationHandler;
 import com.ycs.study.handler.SuccessAuthenticationHandler;
 import com.ycs.study.service.impl.UserService;
+import com.ycs.study.util.MD5Util;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -52,13 +58,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(
                     new PasswordEncoder() {
                         @Override
-                        public String encode(CharSequence charSequence) {
-                            return charSequence.toString();
+                        public String encode(CharSequence rawPassword) {
+                            return MD5Util.encode(rawPassword.toString());
                         }
 
                         @Override
-                        public boolean matches(CharSequence charSequence, String s) {
-                            return s.equals(charSequence.toString());
+                        public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                            return encodedPassword.equals(this.encode(rawPassword.toString()));
                         }
                     });
     }
@@ -69,10 +75,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                  //指定自定义登录页面，不指定则使用sucerity自带的默认配置的 /login, 跳转到到默认的登录页面
                 .loginPage("/login1")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
                 // 自定义登录路径 登录请求url-form表单的action
                 .loginProcessingUrl("/authentication/form1")
                 // 自定义登录失败处理
                 .failureHandler(failureAuthenticationHandler)
+//                .failureUrl("/login?error")
                 // 自定义登录成功处理
                 .successHandler(successAuthenticationHandler)
                 .and()
@@ -91,13 +100,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/java").hasRole("JAVA")
 //                .antMatchers("/php").hasRole("PHP")
 //                .antMatchers("/python").hasRole("PYTHON")
-                .antMatchers("/docker").hasAuthority("DOCKER") //用户拥有制定的角色时返回true （Spring security默认会带有ROLE_前缀）
-                .antMatchers("/java").hasAuthority("JAVA")
-                .antMatchers("/php").hasAuthority("PHP")
-                .antMatchers("/python").hasAuthority("PYTHON")
-                // 自定义权限验证逻辑
-                .antMatchers("/custom")
-                .access("@testPermissionEvaluator.check(authentication)")
+//                .antMatchers("/docker").hasAuthority("DOCKER") //用户拥有制定的角色时返回true （Spring security默认会带有ROLE_前缀）
+//                .antMatchers("/java").hasAuthority("JAVA")
+//                .antMatchers("/php").hasAuthority("PHP")
+//                .antMatchers("/python").hasAuthority("PYTHON")
+//                // 自定义权限验证逻辑
+//                .antMatchers("/custom")
+//                .access("@testPermissionEvaluator.check(authentication)")
                 //============权限配置end=============
                 .anyRequest() // 任何请求
                 .authenticated() // 都需要身份认证

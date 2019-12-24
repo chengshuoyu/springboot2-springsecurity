@@ -5,24 +5,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * @author chengshuoyu
+ */
 @Controller
 @RequestMapping
-public class TestController {
-
+public class LoginController {
 
     @RequestMapping("/hello")
     public String hello() {
         return "hello";
     }
 
+    /**
+     * security默认访问地址/login, 默认的登录页面
+     * @return
+     */
     @RequestMapping("/login1")
     public String login() {
         return "login";
-    }
-
-    @ResponseBody
-    @GetMapping("/test")
-    public String test(){
-        return "test ok";
     }
 }

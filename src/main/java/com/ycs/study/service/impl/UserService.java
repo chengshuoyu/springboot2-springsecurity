@@ -44,8 +44,10 @@ public class UserService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         List<SysRole> roles = user.getRoles();
         for (SysRole role : roles) {
+            //此处可以让SysRole实现GrantedAuthority接口并重写getAuthority方法
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
+        //此处的密码是从数据库取出的密码，加密过的
         return new User(user.getUserName(), user.getPassword(), authorities);
     }
 }
